@@ -210,14 +210,14 @@ func (light *Light) updateInterval(time time.Time) {
 	}
 }
 
-func (light *Light) updateTargetLightState() bool {
+func (light *Light) updateTargetLightState(time time.Time) bool {
 	if !light.Scheduled {
 		log.Debugf("💡 Light %s - Light is not associated to any schedule. No target light state to update...", light.Name)
 		return false
 	}
 
 	// Calculate the target lightstate from the interval
-	newLightState := light.Interval.calculateLightStateInInterval(time.Now())
+	newLightState := light.Interval.calculateLightStateInInterval(time)
 
 	// Did the target light state change?
 	if newLightState.equals(light.TargetLightState) {
